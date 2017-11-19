@@ -37,13 +37,14 @@ INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_ti
 INSERT INTO game_difficulties (game_difficulty_id, game_difficulty_name,	game_time_manipulation) VALUES (7, '10 min', '{override: 10}');
 
 
-INSERT INTO scores (score_id, user_id,	count_polygons_identified,	game_id,	time_taken, when_game_played, game_difficulty_id, game_type_id, ip_where_game_played) VALUES (1 ,2 ,100, 1, '17:00', '2017-11-11 10:23:54+02', 1, 1, '1.127.34.56');
-INSERT INTO scores (score_id, user_id,	count_polygons_identified,	game_id,	time_taken, when_game_played, game_difficulty_id, game_type_id, ip_where_game_played) VALUES (2 ,4 , 2, 10, '1:30', '2017-11-10 10:23:54+02', 1, 1, '1.127.34.56');
-INSERT INTO scores (score_id, user_id,	count_polygons_identified,	game_id,	time_taken, when_game_played, game_difficulty_id, game_type_id, ip_where_game_played) VALUES (3 ,3 , 3, 32, '12:54', '2017-11-09 10:23:54+02', 1, 1, '1.127.34.56');
-INSERT INTO scores (score_id, user_id,	count_polygons_identified,	game_id,	time_taken, when_game_played, game_difficulty_id, game_type_id, ip_where_game_played) VALUES (4 ,1 , 1, 150, '23:13', '2017-11-08 10:23:54+02', 1, 1, '1.127.34.56');
-
-
 INSERT INTO users (user_id,	username, password_hash, password_salt,	count_games_played,	last_login,	is_first_login, first_name, last_name, email, user_ip, token) VALUES (1, 'countrygal500', 'a8d8c7ddd6s62', 'sdf98SDF98+sdf1', 0, '2017-11-11 10:23:54+02', TRUE, 'Hannah', 'Arendt', 'iknowthings@manythings.com', '1.127.23.34', '4bDac45deUys');
 INSERT INTO users (user_id,	username, password_hash, password_salt,	count_games_played,	last_login,	is_first_login, first_name, last_name, email, user_ip, token) VALUES (2, 'ramblinman20', 'a8d8c7ddd6s62', 'sdf98SDF98+sdf1', 6, '2017-11-10 10:23:54+02', FALSE, 'Carl', 'Jung', 'gottawrite@wuzzlyfe.com', '1.127.23.34', '4bDac45deUys');
 INSERT INTO users (user_id,	username, password_hash, password_salt,	count_games_played,	last_login,	is_first_login, first_name, last_name, email, user_ip, token) VALUES (3, 'bigponderer77', 'a8d8c7ddd6s62', 'sdf98SDF98+sdf1', 12, '2017-11-09 10:23:54+02', FALSE, 'Seneca', 'TheYounger', 'bigponderer77@romansthink.com', '1.127.23.34', '4bDac45deUys');
 INSERT INTO users (user_id,	username, password_hash, password_salt,	count_games_played,	last_login,	is_first_login, first_name, last_name, email, user_ip, token) VALUES (4, 'anonymous', 'a8d8c7ddd6s62', 'sdf98SDF98+sdf1', 467, '2017-11-08 10:23:54+02', FALSE, 'randNameGen', 'randNameGen', 'null', '1.127.23.34', '4bDac45deUys');
+
+
+INSERT INTO scores (score_id, user_id,	count_polygons_identified,	game_id,	time_taken, when_game_played, game_difficulty_id, game_type_id, ip_where_game_played) VALUES (1 ,2 ,100, 1, '17:00', '2017-11-11 10:23:54+02', 1, 1, '1.127.34.56');
+INSERT INTO scores (score_id, user_id,	count_polygons_identified,	game_id,	time_taken, when_game_played, game_difficulty_id, game_type_id, ip_where_game_played) VALUES (2 ,4 , 2, 2, '1:30', '2017-11-10 10:23:54+02', 1, 1, '1.127.34.56');
+INSERT INTO scores (score_id, user_id,	count_polygons_identified,	game_id,	time_taken, when_game_played, game_difficulty_id, game_type_id, ip_where_game_played) VALUES (3 ,3 , 3, 3, '12:54', '2017-11-09 10:23:54+02', 1, 1, '1.127.34.56');
+INSERT INTO scores (score_id, user_id,	count_polygons_identified,	game_id,	time_taken, when_game_played, game_difficulty_id, game_type_id, ip_where_game_played) VALUES (4 ,1 , 1, 4, '23:13', '2017-11-08 10:23:54+02', 1, 1, '1.127.34.56');
+
