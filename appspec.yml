@@ -7,13 +7,15 @@ hooks:
   BeforeInstall:
     - location: scripts/stop_server.sh
     - location: scripts/delete_old_files.sh
+      runas: root
   AfterInstall:
-    - location: scripts/sleep.sh
+    - location: scripts/change_permissions.sh
+      runas: root
   ApplicationStart:
     - location: scripts/start_server.sh
-      timeout: 400
+      timeout: 40
       runas: root
   ApplicationStop:
     - location: scripts/stop_server.sh
-      timeout: 45
+      timeout: 40
       runas: root
