@@ -9,6 +9,7 @@ import { bindActionCreators } from 'redux';
 import {
   sanitizeInput,
   countdownGameLogic,
+  nameTheCountryGameLogic,
   toggleMissingCountries,
   mapDetails,
   getRandomUnansweredPolygon
@@ -66,13 +67,14 @@ export default class Map extends React.Component {
       gameSettings: true,
       gameStart: false,
       gameEnd: false,
+      highlightedPolygon: null,
     }
     this.incrementer = null;
     this.onInputChange = this.onInputChange.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleStart = this.handleStart.bind(this);
     this.handleSettings = this.handleSettings.bind(this);
-    this.handleQuit = this.handleQuit.bind(this);
+    this.handleGameEnd = this.handleGameEnd.bind(this);
     this.isEnd = this.isEnd.bind(this);
     this.keyPress = this.keyPress.bind(this);
     this.showMarkers = this.showMarkers.bind(this);
@@ -114,7 +116,7 @@ export default class Map extends React.Component {
 
   }
   //on quit, set change game state and clear timer
-  handleQuit() {
+  handleGameEnd() {
     this.setState({
       userQuit: true,
       gameEnd : true });
@@ -131,6 +133,21 @@ export default class Map extends React.Component {
   }
   //on start focus client cursor to answerInput field and start timer?
   handleStart() {
+
+    //pack gameValues for game init
+    let gameValues = {
+
+      map: map,
+      countPolygonsEntered: this.props.countPolygonsEntered,
+      countTotalSubmissions: this.props.countTotalSubmissions,
+      incorrectEntries: this.props.incorrectEntries,
+      dispatchFcn: this.props.dispatch,
+      gameData: this.props.gameData,
+      reactThis: this,
+      highlightedPolygon: this.state.highlightedPolygon,
+
+    }
+
     //focuses cursor in input-entry when user clicks 'start'
     this.nameInput.focus();
     //hides gameStart modal
@@ -142,11 +159,7 @@ export default class Map extends React.Component {
       ), 1000);
     //initializes random country selector if game is not countdown
     if (this.props.gameTypeSelected !== 'Countdown') {
-      let polygonInData = getRandomUnansweredPolygon(this.props.gameData)
-      map.setZoom(6)
-      map.setCenter({lat: polygonInData.countryCenter[0], lng: polygonInData.countryCenter[1]})
-      let polygonInMap = map.data.getFeatureById(polygonInData.id)
-      map.data.overrideStyle(polygonInMap, {strokeColor: '#99FF00', strokeWeight: '3'})
+      nameTheCountryGameLogic(gameValues)
     }
   }
   //closes gameStart modal onClick
@@ -170,38 +183,49 @@ export default class Map extends React.Component {
     // map.setCenter({lat:24,lng:-76}) this will dynamically change map center
 
     if(e.keyCode == 13){
-      console.log(e.target.value)
-        let gameTypeSelected = this.props.gameTypeSelected
-        console.log(gameTypeSelected)
-        let answerSubmitted = e.target.value;
-        //clear text input after user hits enter
-        this.setState({inputValue: ''});
-        //sanitize input to all lowercase and remove '.'
-        let answerSanitized = sanitizeInput(answerSubmitted);
-        //check answer for countdown game
+      console.log('this.state.gameEnd')
+      console.log(this.state.gameEnd)
+      let submission = e.target.value;
+      //clear text input after user hits enter
+      this.setState({inputValue: ''});
+      //sanitize input to all lowercase and remove '.'
+      let submissionSanitized = sanitizeInput(submission);
+      let gameTypeSelected = this.props.gameTypeSelected;
 
-        if (gameTypeSelected === 'Countdown') {
+      // build game values object to pass into game logic
+      let gameValues = {
 
-          countdownGameLogic(
-            map,
-            this.props.gameData,
-            answerSanitized,
-            this.props.countPolygonsEntered,
-            this.props.countTotalSubmissions,
-            this.props.incorrectEntries,
-            this.props.dispatch
-          )
+        submissionSanitized: submissionSanitized,
+        map: map,
+        countPolygonsEntered: this.props.countPolygonsEntered,
+        countTotalSubmissions: this.props.countTotalSubmissions,
+        incorrectEntries: this.props.incorrectEntries,
+        dispatchFcn: this.props.dispatch,
+        gameData: this.props.gameData,
+        reactThis: this,
+        highlightedPolygon: this.state.highlightedPolygon,
+        handleGameEnd: this.handleGameEnd,
 
-        } else if ( gameTypeSelected === 'Name The Country') {
-
-        } else if ( gameTypeSelected === 'Capital to Country') {
-
-        } else if ( gameTypeSelected === 'Country to Capital') {
-
-        }
-
-      //end keystroke if statement
       }
+
+      //check answer for countdown game
+      if (gameTypeSelected === 'Countdown') {
+
+        countdownGameLogic(gameValues);
+
+      } else if ( gameTypeSelected === 'Name the Country') {
+
+        nameTheCountryGameLogic(gameValues, this.state.highlightedPolygon);
+
+
+      } else if ( gameTypeSelected === 'Capital to Country') {
+
+      } else if ( gameTypeSelected === 'Country to Capital') {
+
+      }
+
+    //end keystroke if statement
+    }
   //end keypress function
   }
 
@@ -215,9 +239,6 @@ export default class Map extends React.Component {
     setInterval( () => {
       this.setState({showMissingCountries: false})
     }, 3000);
-
-
-
   }
 
   render() {
@@ -235,6 +256,12 @@ export default class Map extends React.Component {
           onClose={ this.handleClose }
           onStart={this.handleStart}
           open={!this.state.gameSettings && !this.state.gameStart}
+        />
+
+        <GameOver
+          onClose={ this.handleClose }
+          onStart={this.handleStart}
+          open={this.state.gameEnd}
         />
 
         <div className="game-title">
@@ -261,7 +288,7 @@ export default class Map extends React.Component {
 
         <div className="countries-answered">
           <h1> Countries Answered:</h1>
-          <h2> {this.props.countPolygonsIdentified}/{this.props.maxCountPolygons}  </h2>
+          <h2> {this.props.countPolygonsEntered}/{this.props.maxCountPolygons}  </h2>
         </div>
 
         <input
@@ -272,16 +299,9 @@ export default class Map extends React.Component {
           value={ this.state.inputValue }>
         </input>
 
-        {this.isEnd()}
 
-        <Button className="quit-game-btn" onClick={this.handleQuit}>Quit Game</Button>
+        <Button className="quit-game-btn" onClick={this.handleGameEnd}>Quit Game</Button>
 
-        {
-          this.state.quit ?
-          <GameOver onClose={ this.handleClose } open={this.props.gameOver}/>
-          :
-            null
-        }
 
         <div className="maps" id="map"></div>
       </div>

@@ -1,6 +1,5 @@
 
 import {
- //add some score recording actions and stuff
  submitCorrectEntry,
  submitIncorrectEntry,
  incrementTotalSubmissions,
@@ -9,62 +8,58 @@ import {
 
 
 
-export const countdownGameLogic = (map, gameData, answerSanitized, countPolygonsEntered, countTotalSubmissions, incorrectEntries, dispatchFcn) => {
-  let answerExists = false;
-  // //loop through gamedata array
-  for (var i = 0; i < gameData.length; i++) {
-  //   //loop through accepted answers within country obj
-    for (var j = 0; j < gameData[i].acceptedAnswers.length; j++) {
-  //     // if answer matches
-      if (answerSanitized === gameData[i].acceptedAnswers[j]) {
-  //       // if the answer has already been input
-        if (gameData[i].polygonAnswered) {
-          countdownCheckAnswer(
-            'answered',
-            gameData[i].id,
-            gameData,
-            map,
-            answerSanitized,
-            countPolygonsEntered,
-            countTotalSubmissions,
-            incorrectEntries,
-            dispatchFcn
-          );
-          answerExists = true;
-        } else if (!gameData[i].polygonAnswered){
-          countdownCheckAnswer(
-            'unanswered',
-            gameData[i].id,
-            gameData,
-            map,
-            answerSanitized,
-            countPolygonsEntered,
-            countTotalSubmissions,
-            incorrectEntries,
-            dispatchFcn
-           );
-           answerExists = true;
+export const countdownGameLogic = (gameValues) => {
+let answerStatus = 'incorrect';
+let polygonID = null;
+let endGame = true;
+   //loop through gamedata array
+  for (var i = 0; i < gameValues.gameData.length; i++) {
+     //loop through accepted answers within country obj
+    for (var j = 0; j < gameValues.gameData[i].acceptedAnswers.length; j++) {
+       // if answer matches
+      if (gameValues.submissionSanitized === gameValues.gameData[i].acceptedAnswers[j]) {
+         // if the answer has already been input
+        if (gameValues.gameData[i].polygonAnswered) {
+
+          answerStatus = 'answered';
+          polygonID = gameValues.gameData[i].id;
+
+        } else if (!gameValues.gameData[i].polygonAnswered) {
+
+          answerStatus = 'unanswered';
+          polygonID = gameValues.gameData[i].id;
+
         }
       }
     }
   }
-  if (!answerExists) {
-    countdownCheckAnswer(
-      'incorrect',
-      null,
-      gameData,
-      map,
-      answerSanitized,
-      countPolygonsEntered,
-      countTotalSubmissions,
-      incorrectEntries,
-      dispatchFcn
-    );
+  //if there is no match at all, then the answer is incorrect
+  countdownAnswerResponse( answerStatus, polygonID, gameValues );
+  //verify there are countries left
+  gameValues.gameData.forEach((el) => {
+    if (!el.polygonAnswered) {
+      endGame = false;
+    }
+  })
+  
+  // if all polygons are answered
+  if (endGame) {
+    gameValues.handleGameEnd();
   }
+
+  return;
 
 }
 
-const countdownCheckAnswer = ( answerStatus, polygonID, gameData, map, answerSanitized, countPolygonsEntered, countTotalSubmissions, incorrectEntries, dispatchFcn ) => {
+const countdownAnswerResponse = ( answerStatus, polygonID, gameValues ) => {
+  //unpack variables
+  let map = gameValues.map;
+  let dispatchFcn = gameValues.dispatchFcn;
+  let countPolygonsEntered = gameValues.countPolygonsEntered;
+  let gameData = gameValues.gameData;
+  let submissionSanitized = gameValues.submissionSanitized;
+  let incorrectEntries = gameValues.incorrectEntries;
+  let countTotalSubmissions = gameValues.countTotalSubmissions;
   let polygon = map.data.getFeatureById(polygonID)
 
   if (answerStatus === 'answered') {
@@ -84,7 +79,7 @@ const countdownCheckAnswer = ( answerStatus, polygonID, gameData, map, answerSan
               {
                 fillOpacity: '0.5',
                 fillColor: '#7FF000',
-                strokeColor: '#99FF00',
+                strokeColor: '#FFD700',
                 strokeWeight: '1',
               }
             ),1000)
@@ -97,7 +92,7 @@ const countdownCheckAnswer = ( answerStatus, polygonID, gameData, map, answerSan
         {
           fillOpacity: '0.5',
           fillColor: '#7FF000',
-          strokeColor: '#99FF00',
+          strokeColor: '#FFD700',
           strokeWeight: '1',
         }
       );
@@ -107,7 +102,7 @@ const countdownCheckAnswer = ( answerStatus, polygonID, gameData, map, answerSan
         submitCorrectEntry(
           countPolygonsEntered,
           polygonID,
-           gameData
+          gameData
          )
        )
     //trigger for correct sound
@@ -115,7 +110,7 @@ const countdownCheckAnswer = ( answerStatus, polygonID, gameData, map, answerSan
   } else { //answer status is 'incorrect'
 
     //dispatch to store in incorrectEntries
-    dispatchFcn(submitIncorrectEntry(answerSanitized, incorrectEntries))
+    dispatchFcn(submitIncorrectEntry(submissionSanitized, incorrectEntries))
     //trigger for incorrect sound
     //trigger for text field to shake
   }
@@ -124,19 +119,3 @@ const countdownCheckAnswer = ( answerStatus, polygonID, gameData, map, answerSan
   dispatchFcn(incrementTotalSubmissions(countTotalSubmissions))
   return;
 }
-
-
-// } else if (answerResponse[0] === 'unanswered') {
-//   //modify polygon fillColor
-//   let polygon = map.data.getFeatureById(answerResponse[1])
-//   map.data.overrideStyle(polygon, {fillOpacity: '0.5', fillColor: '#7FF000', strokeColor: '#99FF00', strokeWeight: '1'})
-//   //dispatch to modify game data to register correct answer
-//   //and increment number of polygons identified by 1
-//   this.props.dispatch(
-//     submitCorrectEntry(
-//       this.props.countPolygonsEntered,
-//       answerResponse[1],
-//       this.props.gameData
-//     )
-//   );
-// }
