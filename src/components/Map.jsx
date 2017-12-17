@@ -99,7 +99,6 @@ export default class Map extends React.Component {
       styles: mapDetails
     });
     //load in coordinate data with country name information
-    console.log(this.props.gameJSON)
     map.data.loadGeoJson(this.props.gameJSON);
     //set all loaded coordinate data to a red fill color with no stroke
     map.data.setStyle({
