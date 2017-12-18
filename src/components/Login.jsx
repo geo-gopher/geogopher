@@ -3,11 +3,9 @@
  */
 import axios from 'axios';
 import React from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, withRouter } from 'react-router-dom';
 import { Button, Form } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import {withRouter} from "react-router-dom";
-
 import { userActions } from '../actions';
 import { GoogleLogin } from 'react-google-login';
 
@@ -27,11 +25,12 @@ class Login extends React.Component {
     } else {
       this.props.history.push('/');
     }
-    
+
   }
   onLoginFailure(response) {
     console.log('failure: ', response);
   }
+
 
   render() {
     return(
@@ -46,13 +45,24 @@ class Login extends React.Component {
               <label>Password</label>
               <input name='password' placeholder='Password' type='password'required='true'/>
             </Form.Field>
-        <Link to="/register"> sign up </Link>
+
+        <div className="divider"></div>
+
+
+        <Button className="login-btn" content="Login"/>
+
+        <Button className="register-btn"  as={ Link } to="/register" content="Signup"/>
+
         <GoogleLogin
+        className="google-btn"
         clientId="884185427931-gi7dgev6mm5buttbcqpenvc3h38a9oel.apps.googleusercontent.com"
-        buttonText="Sign up or Login w/ Google"
+        buttonText="Login with Google"
         onSuccess={this.onLoginSuccess}
         onFailure={this.onLoginFailure}
         />
+
+        <Button className="anonymous-btn"  as={ Link } to="/" content="Play as Anonymous"/>
+
         </Form>
     </div>
     )
@@ -66,4 +76,3 @@ function mapStateToProps(state) {
 }
 
 export default withRouter(connect(mapStateToProps)(Login));
-

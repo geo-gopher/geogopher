@@ -8,9 +8,7 @@ import { Menu } from 'semantic-ui-react';
 class NavBar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      activeItem: null,
-    }
+
     this.onLogoutSuccess = this.onLogoutSuccess.bind(this);
   }
 
@@ -31,19 +29,19 @@ class NavBar extends React.Component {
 
                   <Menu.Menu position='right'>
 
-                    <Menu.Item name='signup' active={this.state.activeItem === 'signup'} onClick={this.handleItemClick}>
+                    <Menu.Item>
 
                      <NavLink exact to="/"> games list </NavLink>
 
                     </Menu.Item>
 
-                    <Menu.Item name='signup' active={this.state.activeItem === 'signup'} onClick={this.handleItemClick}>
+                    <Menu.Item>
 
                      <NavLink to="/map"> map </NavLink>
 
                     </Menu.Item>
 
-                    <Menu.Item name='help' active={this.state.activeItem === 'help'} onClick={this.handleItemClick}>
+                    <Menu.Item>
 
                        {user ? (
                          <div>
