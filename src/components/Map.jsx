@@ -311,77 +311,85 @@ export default class Map extends React.Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="game-container">
+
+        <div className="game-region">{ this.props.gameSelected }</div>
+        <div className="game-type">{ this.props.gameTypeSelected}</div>
+        <div className="game-difficulty">{ this.props.gameDifficultySelected }</div>
+        <div className="maps" id="map"></div>
 
         <div className="game-controls">
 
-        <GameSettings
-          onClose={ this.handleClose }
-          onContinue={this.handleSettings}
-          open={this.state.gameSettings}
-        />
+          <GameSettings
+            onClose={ this.handleClose }
+            onContinue={this.handleSettings}
+            open={this.state.gameSettings}
+          />
 
-        <GameStart
-          onClose={ this.handleClose }
-          onStart={this.handleStart}
-          open={!this.state.gameSettings && !this.state.gameStart}
-        />
+          <GameStart
+            onClose={ this.handleClose }
+            onStart={this.handleStart}
+            open={!this.state.gameSettings && !this.state.gameStart}
+          />
 
-        <GameOver
-          onDifferentGame={ this.handlePlayDifferentGame }
-          onStart={this.handleStart}
-          open={this.state.gameEnd}
-        />
+          <GameOver
+            onDifferentGame={ this.handlePlayDifferentGame }
+            onStart={this.handleStart}
+            open={this.state.gameEnd}
+          />
 
-        <div className="game-title">
-          <h1>{ this.props.gameSelected }</h1>
-          <h2>{ this.props.gameTypeSelected+" | "+this.props.gameDifficultySelected }</h2>
+          <div className="time-remaining-title"> Time Remaining: </div>
+          <div className="polygon-score-title"> Countries Answered: </div>
+
+          <div className="time-remaining"> {formatSecondsToMMSS(this.props.gameTimerRemaining)} </div>
+          <div className="polygon-score"> {this.props.countPolygonsEntered}/{this.props.maxCountPolygons} </div>
+
+          {
+            true // future state boolean for if game requires input or not (geoclick)
+            // does not require input, but instead the field is replaced
+            ?
+            <input
+              className="entry-display"
+              ref={(input) => { this.nameInput = input; }}
+              onChange={ this.onInputChange }
+              onKeyDown={this.keyPress}
+              value={ this.state.inputValue }>
+            </input>
+            :
+            null
+          }
+
+          {
+            true
+            ?
+            <Button className="hint-btn" onClick={ console.log("build hint logic") }>HINT</Button>
+            :
+            null
+          }
+
+          {
+            this.state.renderMissingCountriesButton
+            ?
+            <Button className="advance-btn" onClick={ this.showMarkers }>globeimg</Button>
+            : null
+          }
+
+          {
+            this.state.renderSkipCountryButton
+            ?
+            <Button className="advance-btn" onClick={ this.skipCountry }>SKIP</Button>
+            : null
+          }
+
+          <Button className="quit-game-btn" onClick={this.handleGameEnd}>QUIT</Button>
+
+          {/* end game controls */}
         </div>
-
-        {
-          this.state.renderMissingCountriesButton
-          ?
-          <div className="show-missing-countries-button">
-            <Checkbox checked={this.state.showMissingCountries} onClick={ this.showMarkers }toggle />
-          </div>
-          : null
-        }
-
-        {
-          this.state.renderSkipCountryButton
-          ?
-            <Button className="skip-country-btn" onClick={ this.skipCountry }>Skip</Button>
-          : null
-        }
-
-        <div className="time-remaining-title">
-          <h1> Time Remaining:</h1>
-        </div>
-
-        <div className="time-remaining">
-          <h1> {formatSecondsToMMSS(this.props.gameTimerRemaining)} </h1>
-        </div>
-
-        <div className="countries-answered">
-          <h1> Countries Answered:</h1>
-          <h2> {this.props.countPolygonsEntered}/{this.props.maxCountPolygons}  </h2>
-        </div>
-
-        <input
-          className="input-entry"
-          ref={(input) => { this.nameInput = input; }}
-          onChange={ this.onInputChange }
-          onKeyDown={this.keyPress}
-          value={ this.state.inputValue }>
-        </input>
-
-
-        <Button className="quit-game-btn" onClick={this.handleGameEnd}>Quit</Button>
-
-
-        <div className="maps" id="map"></div>
+        {/* end game container */}
       </div>
-      </div>
+      // end return for render
       );
-  }
+    // end render
+    }
+//end class constructor
 }
