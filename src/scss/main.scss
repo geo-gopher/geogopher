@@ -95,27 +95,36 @@ div.game-difficulty{
 
 //map component game controls styling
 div.game-controls{
-  grid-area: gcontrols;
-  display: grid;
-  grid-template-columns: 4fr 1fr 1fr 1fr 1fr 4fr;
-  grid-template-rows: 1fr 4fr 3fr 54fr 4fr 4fr 3fr 5fr;
-  grid-gap: 10px;
-  grid-template-areas: ".. ..       ..       ..        ..        .."
-                       ".. timehead timehead scorehead scorehead .."
-                       ".. timedisp timedisp scoredisp scoredisp .."
-                       ".. ..       ..       ..        ..        .."
-                       ".. ..       ..       ..        ..        .."
-                       ".. inputent inputent inputent  inputent  .."
-                       ".. hint     advance  ..        quit      .."
-                       ".. ..       ..       ..        ..        ..";
-  height: 92vh;
+    grid-area: gcontrols;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-areas: ".. ..       ..       ..        ..        .."
+                         ".. timehead timehead scorehead scorehead .."
+                         ".. timedisp timedisp scoredisp scoredisp .."
+                         ".. ..       ..       ..        ..        .."
+                         ".. ..       ..       ..        ..        .."
+                         ".. inputent inputent inputent  inputent  .."
+                         ".. hint     advance  ..        quit      .."
+                         ".. ..       ..       ..        ..        ..";
+
+    @media screen and (max-width: 1299px) {
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+      grid-template-rows: 1fr 4fr 3fr 54fr 4fr 4fr 3fr 5fr;
+      height: 85vh;
+    }
+
+    @media screen and (min-width: 1300px) {
+      grid-template-columns: 4fr 1fr 1fr 1fr 1fr 4fr;
+      grid-template-rows: 1fr 4fr 3fr 54fr 4fr 4fr 3fr 5fr;
+      height: 92vh;
+    }
 }
 
 .time-remaining-title{
   grid-area: timehead;
   color: black;
   z-index: 4;
-  font-size: 2em;
+  font-size: 1.5em;
   font-weight: bolder;
   align-self: center;
   justify-self: center;
@@ -127,7 +136,7 @@ div.game-controls{
   grid-area: scorehead;
   color: black;
   z-index: 4;
-  font-size: 2em;
+  font-size: 1.5em;
   align-self: center;
   justify-self: center;
   padding-left: 20px;
@@ -138,7 +147,7 @@ div.game-controls{
   grid-area: timedisp;
   color: black;
   z-index: 4;
-  font-size: 5em;
+  font-size: 4em;
   font-weight: bolder;
   align-self: center;
   justify-self: center;
@@ -149,7 +158,7 @@ div.game-controls{
   grid-area: scoredisp;
   color: black;
   z-index: 4;
-  font-size: 5em;
+  font-size: 4em;
   font-weight: bolder;
   align-self: center;
   justify-self: center;
