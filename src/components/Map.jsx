@@ -2,7 +2,7 @@
 
 /*global window.google*/
 import React from 'react';
-import { Button, Checkbox } from 'semantic-ui-react';
+import { Button, Checkbox, Icon } from 'semantic-ui-react';
 import GameSettings from './GameSettings';
 import GameStart from './GamesStart';
 import GameOver from './GameOver';
@@ -370,7 +370,7 @@ export default class Map extends React.Component {
           {
             this.state.renderMissingCountriesButton
             ?
-            <Button className="advance-btn" onClick={ this.showMarkers }>globeimg</Button>
+            <Button className="advance-btn" onClick={ this.showMarkers } icon="globe"/>
             : null
           }
 

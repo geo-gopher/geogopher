@@ -98,14 +98,16 @@ div.game-controls{
   grid-area: gcontrols;
   display: grid;
   grid-template-columns: 4fr 1fr 1fr 1fr 1fr 4fr;
-  grid-template-rows: 1fr 4fr 3fr 60fr 4fr 3fr 5fr;
+  grid-template-rows: 1fr 4fr 3fr 54fr 4fr 4fr 3fr 5fr;
   grid-gap: 10px;
   grid-template-areas: ".. ..       ..       ..        ..        .."
                        ".. timehead timehead scorehead scorehead .."
                        ".. timedisp timedisp scoredisp scoredisp .."
                        ".. ..       ..       ..        ..        .."
+                       ".. ..       ..       ..        ..        .."
                        ".. inputent inputent inputent  inputent  .."
-                       ".. hint     advance  ..        quit      ..";
+                       ".. hint     advance  ..        quit      .."
+                       ".. ..       ..       ..        ..        ..";
   height: 92vh;
 }
 
@@ -163,7 +165,7 @@ input.entry-display, input.entry-display:focus, .entry-display, {
   color: black;
   background-color: white;
   border: 1px solid lightgrey;
-  border-radius: 5px;
+  border-radius: 4px;
   box-shadow: 0px 10px 20px -10px darkslategrey;
   padding-left: 20px;
 }
@@ -178,13 +180,13 @@ button.ui.button.hint-btn{
   font-weight: lighter;
   color: white;
   border: 1px solid lightgrey;
-  border-radius: 5px;
+  border-radius: 4px;
   box-shadow: 0px 10px 20px -10px darkslategrey;
   &:hover{
     background-color: #669933;
     color: white;
     border: 1px solid white;
-    border-radius: 5px;
+    border-radius: 4px;
   }
 }
 
@@ -198,13 +200,13 @@ button.ui.button.advance-btn{
   font-weight: lighter;
   color: white;
   border: 1px solid lightgrey;
-  border-radius: 5px;
+  border-radius: 4px;
   box-shadow: 0px 10px 20px -10px darkslategrey;
   &:hover{
     background-color: #336699;
     color: white;
     border: 1px solid white;
-    border-radius: 5px;
+    border-radius: 4px;
   }
 }
 
@@ -218,13 +220,15 @@ button.ui.button.quit-game-btn{
   font-weight: lighter;
   color: white;
   border: 1px solid lightgrey;
-  border-radius: 5px;
+  border-radius: 4px;
   box-shadow: 0px 10px 20px -10px darkslategrey;
+  margin-right: 0;
+  margin-left: 2em;
   &:hover{
     background-color: #CC3333;
     color: white;
     border: 1px solid white;
-    border-radius: 5px;
+    border-radius: 4px;
   }
 }
 
