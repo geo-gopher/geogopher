@@ -51,14 +51,21 @@ li {
 
 div.game-container{
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 1fr 24fr 1fr;
+  max-width: 100vw;
+  max-height: 95vh;
   grid-template-areas: "gregion    gtype      gdifficulty"
                        "gcontrols  gcontrols  gcontrols"
                        "ggap       ggap       ggap";
 
-  max-width: 100vw;
-  max-height: 95vh;;
+  @media screen and (max-width: 1299px) {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr 24fr 1fr;
+  }
+
+  @media screen and (min-width: 1300px) {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr 60fr 1fr;
+  }
 }
 
 div.maps#map{
@@ -125,7 +132,6 @@ div.game-controls{
   color: black;
   z-index: 4;
   font-size: 1.5em;
-  font-weight: bolder;
   align-self: center;
   justify-self: center;
   padding-right: 20px;
@@ -151,7 +157,7 @@ div.game-controls{
   font-weight: bolder;
   align-self: center;
   justify-self: center;
-  padding-right: 20px;
+  padding: 5px 20px 0 0;
 }
 
 .polygon-score{
@@ -162,7 +168,7 @@ div.game-controls{
   font-weight: bolder;
   align-self: center;
   justify-self: center;
-  padding-left: 20px;
+  padding: 5px 0 0 20px;
 }
 
 input.entry-display, input.entry-display:focus, .entry-display, {
@@ -182,7 +188,7 @@ input.entry-display, input.entry-display:focus, .entry-display, {
 button.ui.button.hint-btn{
   grid-area: hint;
   z-index: 4;
-  font-size: 1.5em;
+  font-size: 1.2em;
   background-color: #8AC84A;
   padding: 0;
   letter-spacing: 2px;
@@ -202,7 +208,7 @@ button.ui.button.hint-btn{
 button.ui.button.advance-btn{
   grid-area: advance;
   z-index: 4;
-  font-size: 1.5em;
+  font-size: 1.2em;
   background-color: #6A99CC;
   padding: 0;
   letter-spacing: 2px;
@@ -222,7 +228,7 @@ button.ui.button.advance-btn{
 button.ui.button.quit-game-btn{
   grid-area: quit;
   z-index: 4;
-  font-size: 1.5em;
+  font-size: 1.2em;
   background-color: #ec0524;
   padding: 0;
   letter-spacing: 2px;
