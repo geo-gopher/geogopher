@@ -1,7 +1,65 @@
 
+
 li {
   list-style: none;
 }
+
+div.ui.menu{
+  box-shadow: none;
+  border: none;
+}
+
+img.ui.image.geogopher-navbar-logo{
+  position: absolute;
+  top: -18px;
+  left: 20px;
+}
+
+//games list AKA home page component styling
+.home-page-container {
+  display: grid;
+  grid-template-columns: 1fr 10fr 1fr;
+  grid-template-areas: ".. splash         .."
+                       ".. countriestitle .."
+                       ".. countries      ..";
+
+}
+
+.splash {
+  margin: 80px 0 80px 0;
+  grid-area: splash;
+  text-align: center;
+}
+
+.countries-title{
+  grid-area: countriestitle;
+  h3{
+    margin: 0!important;
+  }
+}
+
+.countries-list{
+  grid-area: countries;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  .ui.card:first-child{
+    margin-top: 1em;
+  }
+}
+
+.ui.card{
+    align-self: center;
+    justify-self:center;
+    transition: opacity 2s, background-color 2s;
+
+    &:hover{
+      cursor: pointer;
+      opacity: .7;
+      background-color: white;
+    }
+}
+
 
 //game settings modal
 
@@ -247,20 +305,6 @@ button.ui.button.quit-game-btn{
   }
 }
 
-
-
-//games list component styling
-
-.games-list{
-  display:grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 10px;
-}
-
-.ui.card{
-  align-self: center;
-  justify-self:center;
-}
 
 //login styling
 

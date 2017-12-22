@@ -3,7 +3,9 @@ import { NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { GoogleLogout } from 'react-google-login';
 import { userActions } from '../actions';
-import { Menu } from 'semantic-ui-react';
+import { Menu, Image } from 'semantic-ui-react';
+
+const geogopherLogo = require('-!url-loader?name=geogopher-logo!../assets/geogopher-logo.svg');
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -28,17 +30,26 @@ class NavBar extends React.Component {
         <nav>
                 <Menu>
 
+                  <Menu.Menu position='left'>
+                      <Image className='geogopher-navbar-logo' src={geogopherLogo}/>
+                  </Menu.Menu>
+
                   <Menu.Menu position='right'>
 
                     <Menu.Item>
 
-                     <NavLink exact to="/"> games list </NavLink>
+                     <NavLink exact to="/"> PLAY </NavLink>
 
                     </Menu.Item>
 
                     <Menu.Item>
 
-                     <NavLink to="/map"> map </NavLink>
+                     <NavLink to="/"> EXPLORE </NavLink>
+
+                    </Menu.Item>
+                    <Menu.Item>
+
+                     <NavLink to="/"> SCORES </NavLink>
 
                     </Menu.Item>
 
