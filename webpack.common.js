@@ -32,22 +32,20 @@ module.exports = {
       },
     },
     {
-      test: /\.scss$/,
-      use: extractSass.extract({
-        use: [{
-          loader: 'css-loader'
-        }, {
-          loader: 'sass-loader'
-        }],
-        fallback: 'style-loader'
-      }),
-    }, {
-      test: /\.css?/,
-      loader: ['style-loader',
-        'css-loader',
-        'sass-loader'
-      ]
-    }, {
+      test: /\.css$/,
+      use: ExtractTextPlugin.extract({
+        fallback: 'style-loader',
+        use: ['css-loader']
+      })
+    },
+    {
+      test: /\.*(sass|scss)$/,
+      use: ExtractTextPlugin.extract({
+        fallback: 'style-loader',
+        use: ['css-loader', 'sass-loader']
+      })
+    },
+    {
       test: /\.(png|jpg|gif)$/,
       use: [
         'file-loader',

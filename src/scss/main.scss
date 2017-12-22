@@ -1,4 +1,4 @@
-
+@import url('https://fonts.googleapis.com/css?family=Allerta|Ubuntu+Mono:700');
 
 li {
   list-style: none;
@@ -48,14 +48,41 @@ img.ui.image.geogopher-navbar-logo{
   }
 }
 
-.ui.card{
+.select-this-game{
+  opacity: 0;
+  position: absolute;
+  z-index: 4;
+  height: 100%;
+  width: 100%;
+  transition: opacity .5s;
+  h1{
+    position:absolute;
+    border: 10px #ec0524 solid;
+    right: 20%;
+    left: 20%;
+    top: 30%;
+    padding: 5%;
+    font-family: 'Ubuntu Mono', 'Helvetica';
+    font-weight: bolder;
+    text-align: center;
+  }
+  &:hover{
+    opacity: 1;
+  }
+}
+
+.ui.card, .ui.cards > .card{
     align-self: center;
     justify-self:center;
-    transition: opacity 2s, background-color 2s;
-
+    opacity: 1;
+    transition: background-color .5s opacity .5s;
+    width: 100%;
+    max-width: 400px;
+    border: none;
+    box-shadow: 5px 10px 20px -10px darkslategrey;
     &:hover{
       cursor: pointer;
-      opacity: .7;
+      opacity: .8;
       background-color: white;
     }
 }

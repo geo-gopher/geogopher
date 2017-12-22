@@ -73,7 +73,7 @@ class GamesList extends React.Component {
 
   render() {
     const {games} = this.props;
-    
+
     return (
 
 
@@ -100,6 +100,7 @@ class GamesList extends React.Component {
                 (game, index) => (
 
                   <Card key={index} >
+                    <div className='select-this-game'> <h1>PLAY</h1> </div>
                     <Image src={thmbArr[index]}
                           onClick={() => this.onGameSelect(index)}
                         />
