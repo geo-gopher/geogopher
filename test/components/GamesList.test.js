@@ -9,11 +9,22 @@ import store from '../../src/store';
 import GamesList from '../../src/components/GamesList';
 import { createRenderer } from 'react-test-renderer/shallow';
 
+const db = require('../../db/config');
+
 global.requestAnimationFrme = function(callback) {
   setTimeout(callback, 0);
 };
 
 describe('The games list', () => {
+
+  beforeEach((done) => {
+    db.users.findOrCreate({where: {user_id: 1}})
+    .spread(user => {
+      console.log(user);
+      return done(null, user);
+    })
+  });
+
 
   /* These first two tests are essentially the same. The test using
    * createRenderer does a shallow rendering, which means that children of

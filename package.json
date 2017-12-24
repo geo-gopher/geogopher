@@ -34,6 +34,7 @@
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "history": "^4.7.2",
+    "ipware": "1.0.0",
     "moment": "^2.19.3",
     "passport": "^0.4.0",
     "passport-google-oauth": "^1.0.0",

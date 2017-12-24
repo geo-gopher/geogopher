@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 
+const getIP = require('ipware')().get_ip;
 const moment = require('moment');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
@@ -75,6 +76,11 @@ apiRouter.route('/postScore')
   .post((req, res) => {
     console.log('THIS IS THE REQ BODY UP IN THAT POST SCORE 🤘')
     console.log(req.body)
+
+    // TODO: remove this after testing
+    let userIP = getIP(req);
+    console.log('IP: $$$$$$$$$$$$$$$$ IP: ', userIP);
+
     let score = {
       'user_id': 1,
       'count_polygons_entered': req.body.countPolygonsEntered,
@@ -89,7 +95,7 @@ apiRouter.route('/postScore')
       'game_timer_remaining': req.body.gameTimerRemaining,
       'game_start_timestamp': req.body.gameStartTimestamp,
       'game_end_timestamp': req.body.gameEndTimestamp,
-      'ip_where_game_played': 1,
+      'ip_where_game_played': getIP(req)
     }
     db.scores.create(score)
     .then(score => {
@@ -100,8 +106,6 @@ apiRouter.route('/postScore')
       throw error
     })
 });
-
-
 
 apiRouter.route('/login')
   .post((req, res) => {
@@ -169,6 +173,7 @@ apiRouter.route('/user')
       console.log(error);
     })
   });
+
 
 app.get('/*', (req, res) => {
   res.sendFile(path.resolve('./dist', 'index.html'));
