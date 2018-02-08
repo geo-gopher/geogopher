@@ -9,7 +9,7 @@ cache:
 
 ## Zip up our project and put into a directory before uploading to s3
 before_deploy:
-  - zip -r latestTravis *
+  - zip -q -r latestTravis *
   - mkdir -p s3_upload
   - mv latestTravis.zip s3_upload/latestTravis.zip
 
